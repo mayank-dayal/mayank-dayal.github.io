@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mayank Dayal — Data Science & AI Leader</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0f1e;
+    --navy2: #111827;
+    --blue: #1d4ed8;
+    --blue-lt: #3b82f6;
+    --gold: #c9a84c;
+    --gold-lt: #f0d080;
+    --white: #f8f9ff;
+    --gray: #94a3b8;
+    --gray2: #475569;
+    --card: #131c30;
+    --border: rgba(255,255,255,0.07);
+    --glow: rgba(29,78,216,0.15);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: var(--gold); letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray); text-decoration: none;
+    font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(29,78,216,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 780px; }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem; color: var(--gold);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300; line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-name span { color: var(--gold); }
+  .hero-title {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--gray); font-weight: 300;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-summary {
+    font-size: 1rem; color: #cbd5e1;
+    max-width: 620px; line-height: 1.8;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 600; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.3rem; }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 1.2s forwards;
+  }
+  .btn {
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.3s; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary {
+    background: var(--blue); color: white; border: 1px solid var(--blue);
+  }
+  .btn-primary:hover { background: var(--blue-lt); border-color: var(--blue-lt); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--gold); border: 1px solid var(--gold);
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); transform: translateY(-2px); }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 4rem; position: relative; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem; color: var(--gold);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300; line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+  .section-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-bottom: 1rem;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 1.8rem; border-radius: 4px;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--gold));
+    transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+  }
+  .skill-card:hover { border-color: rgba(29,78,216,0.4); transform: translateY(-3px); }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .skill-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--white); margin-bottom: 0.6rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem; color: var(--blue-lt);
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    padding: 0.2rem 0.6rem; border-radius: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── EXPERIENCE TIMELINE ── */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--blue), transparent);
+  }
+  .timeline-item {
+    position: relative; margin-bottom: 3rem; padding-left: 2rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .timeline-item.visible { opacity: 1; transform: translateX(0); }
+  .timeline-dot {
+    position: absolute; left: -2.4rem; top: 0.4rem;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--blue); border: 2px solid var(--navy);
+    box-shadow: 0 0 8px var(--blue);
+  }
+  .timeline-dot.gold { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem; color: var(--gold);
+    letter-spacing: 0.1em; margin-bottom: 0.3rem;
+  }
+  .timeline-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; color: var(--white);
+  }
+  .timeline-role { font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem; }
+  .timeline-bullets { list-style: none; }
+  .timeline-bullets li {
+    font-size: 0.88rem; color: #94a3b8;
+    padding: 0.3rem 0 0.3rem 1.2rem; position: relative;
+  }
+  .timeline-bullets li::before {
+    content: '▸'; position: absolute; left: 0;
+    color: var(--blue-lt); font-size: 0.7rem; top: 0.4rem;
+  }
+  .highlight { color: var(--gold-lt); font-weight: 500; }
+
+  /* ── PROJECTS GRID ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1.8rem;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .project-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+  .project-card:hover .project-glow {
+    opacity: 1;
+  }
+  .project-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(201,168,76,0.04), transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-saving {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; color: var(--gold); font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .project-name {
+    font-size: 0.92rem; font-weight: 500; color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+  .project-desc { font-size: 0.82rem; color: var(--gray); line-height: 1.6; }
+  .project-badge {
+    display: inline-block; margin-top: 0.8rem;
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    color: var(--gold); background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.2rem 0.6rem; border-radius: 2px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ── AWARDS ── */
+  .awards-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .award-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1.2rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  .award-item:hover { border-color: rgba(201,168,76,0.3); }
+  .award-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .award-text { font-size: 0.83rem; color: #cbd5e1; line-height: 1.5; }
+  .award-org { font-size: 0.72rem; color: var(--gray); margin-top: 0.2rem; font-family: 'DM Mono', monospace; }
+
+  /* ── EDUCATION ── */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .edu-card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 1.8rem; border-radius: 4px;
+  }
+  .edu-year { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--gold); margin-bottom: 0.4rem; }
+  .edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .edu-school { font-size: 0.82rem; color: var(--gray); }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    text-align: center; padding: 5rem 4rem;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 2rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'DM Mono', monospace; font-size: 0.8rem;
+    color: var(--gray); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-link:hover { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 1.5rem;
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    color: var(--gray2); border-top: 1px solid var(--border);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--navy); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .edu-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MD</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Vice President · DBS Bank Singapore</div>
+    <h1 class="hero-name">Mayank<br><span>Dayal</span></h1>
+    <p class="hero-title">Data Science & Technical Manager &nbsp;·&nbsp; Generative AI &nbsp;·&nbsp; Machine Learning</p>
+    <p class="hero-summary">
+      Results-driven AI and Data Science leader with 20+ years of global experience across Singapore, India, Switzerland, and Malaysia. Leading high-impact AI/ML teams at DBS Bank — deploying Generative AI, Deep Learning, and enterprise-scale data platforms that deliver measurable outcomes for one of Asia's most strategic financial institutions.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="stat-num">SGD 3M+</div>
+        <div class="stat-label">Value Delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Engineers Led</div>
+      </div>
+      <div>
+        <div class="stat-num">18</div>
+        <div class="stat-label">DBS Projects</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="mailto:mayankdayal@gmail.com" class="btn btn-outline">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Expertise</div>
+  <div class="section-divider"></div>
+  <h2 class="section-title">Core Skills &<br>Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Generative AI & LLMs</div>
+      <p style="font-size:0.83rem;color:var(--gray)">Production-grade GenAI model monitoring, Cash Payment Investigation AI, Call Summary & Sentiment analysis using transformer architectures.</p>
+      <div class="skill-tags"><span class="tag">Transformers</span><span class="tag">LLMs</span><span class="tag">Claude</span><span class="tag">GenAI</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-name">Deep Learning</div>
+      <p style="font-size:0.83rem;color:var(--gray)">CNNs for KYC document validation, RNN/LSTM for real-time fraud detection, GANs and Transformer-based NLP for compliance automation.</p>
+      <div class="skill-tags"><span class="tag">CNN</span><span class="tag">RNN/LSTM</span><span class="tag">GAN</span><span class="tag">NLP</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Cloud & Data Platforms</div>
+      <p style="font-size:0.83rem;color:var(--gray)">Enterprise-scale data engineering on GCP and AWS. PySpark migrations, Airflow orchestration, Collibra governance, Elasticsearch stack.</p>
+      <div class="skill-tags"><span class="tag">GCP</span><span class="tag">AWS</span><span class="tag">PySpark</span><span class="tag">Airflow</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Data Visualisation</div>
+      <p style="font-size:0.83rem;color:var(--gray)">KPI dashboards, Control Towers, and early warning indicators using Tableau, QlikView, QlikSense, Grafana, Kibana and Elasticsearch.</p>
+      <div class="skill-tags"><span class="tag">QlikSense</span><span class="tag">Tableau</span><span class="tag">Grafana</span><span class="tag">Kibana</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">Programming</div>
+      <p style="font-size:0.83rem;color:var(--gray)">Advanced Python, R, and SQL for ML pipelines and statistical modelling. Pandas, Scikit-learn, XGBoost for production ML systems.</p>
+      <div class="skill-tags"><span class="tag">Python</span><span class="tag">R</span><span class="tag">SQL</span><span class="tag">PySpark</span></div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🏛️</div>
+      <div class="skill-name">AI Governance & RegTech</div>
+      <p style="font-size:0.83rem;color:var(--gray)">MAS-aligned compliance frameworks, data governance with Collibra, regulatory reporting pipelines for RBI, MAS, and Indonesian regulators.</p>
+      <div class="skill-tags"><span class="tag">Collibra</span><span class="tag">MAS</span><span class="tag">RegTech</span><span class="tag">DDOM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background: rgba(255,255,255,0.01);">
+  <div class="section-label">Career</div>
+  <div class="section-divider"></div>
+  <h2 class="section-title">Professional<br>Experience</h2>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jun 2019 — Present</div>
+      <div class="timeline-company">DBS Bank</div>
+      <div class="timeline-role">Vice President — Data Science & Technical Manager · Singapore</div>
+      <ul class="timeline-bullets">
+        <li>Lead AI/ML teams delivering <span class="highlight">Generative AI, Deep Learning (CNNs, RNNs, Transformers)</span> and NLP solutions for fraud detection, credit risk, KYC, and compliance.</li>
+        <li>Mentoring Singapore university graduates on <span class="highlight">Claude Code for Knowledge Base development and Test Automation</span> — building Singapore's GenAI talent pipeline.</li>
+        <li>Drove DBS Technology China (DTC) ramp-up of <span class="highlight">500 engineers</span> for international project delivery.</li>
+        <li>Champion of DBS <span class="highlight">Data Driven Operating Model (DDOM)</span> — Control Tower, Early Warning Indicators, Customer Pulse analytics.</li>
+        <li>Vendor management aligned with MAS guidelines; project governance and finance accounting policies.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot gold"></div>
+      <div class="timeline-period">Sep 2010 — Jun 2019</div>
+      <div class="timeline-company">Cognizant Technology Solutions</div>
+      <div class="timeline-role">Senior Manager Consulting — Process & Quality</div>
+      <ul class="timeline-bullets">
+        <li>Technical Engineering Consultant: Data Mining, Statistical & Real-Time Modelling, Quantitative Analytics, Decision Analytics, KPI Dashboards.</li>
+        <li>Served global banking clients including <span class="highlight">Credit Suisse, Switzerland</span> — awarded Star Award for Core Banking Domain delivery.</li>
+        <li>Awards: GGM Stellar Performance, Frontline Leader — Trusted Partner CS PB IT APAC, Core Flexi Managed Capacity Model (37.5% cost saving).</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Dec 2006 — Aug 2010</div>
+      <div class="timeline-company">IBM India Pvt. Ltd.</div>
+      <div class="timeline-role">Application Developer — Metrics Engineer & CMMi HML Consultant</div>
+      <ul class="timeline-bullets">
+        <li>Core member of <span class="highlight">CMMI Level 5 Taskforce</span> — Process Champion for MA, QPM, OPP, CAR.</li>
+        <li>Advanced statistical techniques: Hypothesis Testing, ANOVA, Multiple Regression; Quantitative Project Management (L4/L5).</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot gold"></div>
+      <div class="timeline-period">Aug 2004 — Dec 2006</div>
+      <div class="timeline-company">Kyocera Wireless India</div>
+      <div class="timeline-role">Senior Software Engineer — SQA Lead</div>
+      <ul class="timeline-bullets">
+        <li>Managed SQA activities; CMMi Gap Analysis; Process definition & development across Measurement Analysis, PMC, SQA, DAR, Product Test.</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jan 2003 — Aug 2004</div>
+      <div class="timeline-company">Hughes Software Systems</div>
+      <div class="timeline-role">Senior Executive</div>
+      <ul class="timeline-bullets">
+        <li>Built MS-based tools for Software Process Improvement; Process Capability Baseline Reports; statistical defect prediction models (Rayleigh Curve, Duane, Gompertz).</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">DBS Bank Impact</div>
+  <div class="section-divider"></div>
+  <h2 class="section-title">Project Highlights &<br>Business Impact</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">SGD 1.5M</div>
+      <div class="project-name">Digital Campaign Re-design</div>
+      <div class="project-desc">Rebuilt 3rd-party cookie-dependent campaign platform using masked data pipelines, recovering SGD 1.5M in revenue and ensuring data privacy compliance.</div>
+      <span class="project-badge">Revenue Recovery</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">SGD 0.5M/yr</div>
+      <div class="project-name">Hadoop to Datalake Migration</div>
+      <div class="project-desc">Migrated 10,000+ datasets (R/Python → PySpark); decommissioned 21 servers. Annual operational saving of SGD 0.5M.</div>
+      <span class="project-badge">Annual Saving</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">SGD 0.25M/yr</div>
+      <div class="project-name">IBG QlikSense Migration</div>
+      <div class="project-desc">Modernised visualisation platform for Institutional Banking (IBGCOO, SME, GTS, IBG Finance). Annual saving SGD 0.25M.</div>
+      <span class="project-badge">Annual Saving</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">SGD 0.2M/yr</div>
+      <div class="project-name">Business Object → QlikSense</div>
+      <div class="project-desc">Migrated 1,200 BO reports to QlikSense/NPrinting. Eliminated SAP vendor dependency and outdated JBOSS application server.</div>
+      <span class="project-badge">Annual Saving</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">68% → 86%</div>
+      <div class="project-name">Testing COE — Regression Automation</div>
+      <div class="project-desc">Bank-wide automation covering 350+ Category 1 & 2 apps on 30 platforms; 30K+ test cases automated. Automation improved from 68% to 86%.</div>
+      <span class="project-badge">Quality & Efficiency</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">⚡ GenAI</div>
+      <div class="project-name">GenAI Risk Guard Force</div>
+      <div class="project-desc">Centralised GenAI model monitoring with resiliency & standard schema; Cash Payment Investigation AI; Call Summary & Sentiment — product-agnostic design for scale.</div>
+      <span class="project-badge">Generative AI</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">🇮🇳 RBI</div>
+      <div class="project-name">India RBI Onshoring (GCP)</div>
+      <div class="project-desc">Migrated 2,500 IBG-FRT application jobs and 3.5K critical tables to GCP India. RBI Data Confidentiality & IN Bank's Licence compliance achieved.</div>
+      <span class="project-badge">Regulatory Compliance</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">🇮🇩 OJK</div>
+      <div class="project-name">Indonesia Regulator Data Confidentiality</div>
+      <div class="project-desc">Engineered secure GCP data pipeline for Consumer Banking customer servicing data to meet Indonesia's regulatory data confidentiality requirements.</div>
+      <span class="project-badge">Regulatory Compliance</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-glow"></div>
+      <div class="project-saving">0 Failures</div>
+      <div class="project-name">Type C ID Migration — 250 IDs</div>
+      <div class="project-desc">Zero-failure migration connecting 50+ IBG-FRT sources (Payment, Trade, Cash, Channels, IBPM) to ADA. No user impact across IBG DC, SME, GTS, Operations.</div>
+      <span class="project-badge">Risk Mitigation</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards" style="background: rgba(255,255,255,0.01);">
+  <div class="section-label">Recognition</div>
+  <div class="section-divider"></div>
+  <h2 class="section-title">Awards &<br>Recognition</h2>
+  <div class="awards-grid">
+    <div class="award-item"><div class="award-icon">🏆</div><div><div class="award-text">GGM Stellar Performance Award — Non-Functional Requirement delivery</div><div class="award-org">Cognizant Technology Solutions</div></div></div>
+    <div class="award-item"><div class="award-icon">⭐</div><div><div class="award-text">Star Award — Managing & executing Financial for Core Banking Domain</div><div class="award-org">Credit Suisse, Switzerland</div></div></div>
+    <div class="award-item"><div class="award-icon">🎖️</div><div><div class="award-text">Frontline Leader — Trusted Partner CS PB IT APAC</div><div class="award-org">Cognizant Technology Solutions</div></div></div>
+    <div class="award-item"><div class="award-icon">🏅</div><div><div class="award-text">Team Award — Core Flexi Managed Capacity Model; 37.5% cost saving</div><div class="award-org">Cognizant Technology Solutions</div></div></div>
+    <div class="award-item"><div class="award-icon">🌟</div><div><div class="award-text">Bravo Award — Implementing CMMi L5 HML practices</div><div class="award-org">IBM India</div></div></div>
+    <div class="award-item"><div class="award-icon">🎯</div><div><div class="award-text">Individual Award — Developing Scrum Dashboard</div><div class="award-org">Kyocera Wireless India</div></div></div>
+    <div class="award-item"><div class="award-icon">🏆</div><div><div class="award-text">Individual Award — Implementing COQ, Risk Profiling and Fagan Inspection</div><div class="award-org">Kyocera Wireless India</div></div></div>
+    <div class="award-item"><div class="award-icon">⭐</div><div><div class="award-text">Team Award — Developing & implementing model for Predicting Product Quality</div><div class="award-org">Kyocera Wireless India</div></div></div>
+    <div class="award-item"><div class="award-icon">🎖️</div><div><div class="award-text">Team Award — Health Index, 2x2 Matrix, Risk Profiling, Digital Dashboards</div><div class="award-org">Hughes Software Systems</div></div></div>
+    <div class="award-item"><div class="award-icon">🏅</div><div><div class="award-text">Popular Award — Uncanny Expertise in MS Excel</div><div class="award-org">Hughes Software Systems</div></div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Education</div>
+  <div class="section-divider"></div>
+  <h2 class="section-title">Academic &<br>Professional Credentials</h2>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-year">2022</div>
+      <div class="edu-degree">PG Program in Data Science</div>
+      <div class="edu-school">Purdue University · Certificate ID: 48108430</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">1999 — 2001</div>
+      <div class="edu-degree">Master of Total Quality Management</div>
+      <div class="edu-school">Statistics & Quantitative Analytics · University of Lucknow, India</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">1996 — 1999</div>
+      <div class="edu-degree">Bachelor of Science</div>
+      <div class="edu-school">Computer Science & Physics · University of Lucknow, India</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">Certifications</div>
+      <div class="edu-degree">Six Sigma Green Belt &amp; More</div>
+      <div class="edu-school" style="margin-top:0.5rem">
+        ✦ Certified Six Sigma Green Belt (2009)<br>
+        ✦ Data Science A-Z: Real Life Exercises (2018)<br>
+        ✦ Extreme Programming (2005)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label" style="justify-content:center;display:flex">Connect</div>
+  <h2 class="section-title" style="text-align:center">Get In Touch</h2>
+  <p style="color:var(--gray);max-width:480px;margin:0 auto 1rem;text-align:center;font-size:0.92rem">
+    Open to senior AI/Data Science leadership opportunities, collaborations, and mentoring engagements in Singapore.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:mayankdayal@gmail.com" class="contact-link">
+      <span>✉</span> mayankdayal@gmail.com
+    </a>
+    <a href="tel:+6583606421" class="contact-link">
+      <span>📞</span> +65-8360-6421
+    </a>
+    <a href="#" class="contact-link">
+      <span>📍</span> Singapore 469986
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Mayank Dayal · Data Science & AI Leader · Singapore
+</footer>
+
+<script>
+  // Intersection Observer for timeline animations
+  const items = document.querySelectorAll('.timeline-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 150);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(item => observer.observe(item));
+
+  // Smooth active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--white)' : '';
+    });
+  });
+</script>
+</body>
+</html>
